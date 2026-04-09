@@ -11,10 +11,13 @@ body {
   font-family: 'Poppins', sans-serif;
   margin:0;
   text-align:center;
-  overflow:hidden;
-  background:linear-gradient(135deg,#ffe0e9,#fff5f5);
+  overflow-x: hidden; /* allow vertical scrolling */
+  background: linear-gradient(135deg,#ffe0e9,#fff5f5);
   background-size: 200% 200%;
   animation: gradientBG 10s ease infinite;
+}
+html {
+  scroll-behavior: smooth; /* smooth scrolling */
 }
 @keyframes gradientBG {
   0% {background-position:0% 50%;}
@@ -141,13 +144,12 @@ img { max-width:500px; border-radius:20px; margin-top:20px; box-shadow:0 10px 20
 // ================== PAGE 1: Puzzle & Music ==================
 function checkAnswer(){
   const ans = document.getElementById("answer1").value.toLowerCase();
-  if(ans === "chombu"){ // replace with your nickname
+  if(ans === "chombu"){ 
     document.getElementById("page1").classList.remove("active");
     document.getElementById("page2").classList.add("active");
 
-    // play music after user interaction
     const music = document.getElementById("bgMusic");
-    music.play().catch(() => alert("Click anywhere to start music 🎵"));
+    music.play().catch(()=>alert("Click anywhere to start music 🎵"));
   } else {
     alert("Wrong answer 😜 Try again");
   }
