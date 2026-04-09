@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday 🎉</title>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+<style>
+/* BODY & BACKGROUND */
+body {
+  font-family: 'Poppins', sans-serif;
+  margin:0;
+  text-align:center;
+  overflow:hidden;
+  background:linear-gradient(135deg,#ffe0e9,#fff5f5);
+  background-size: 200% 200%;
+  animation: gradientBG 10s ease infinite;
+}
+@keyframes gradientBG {
+  0% {background-position:0% 50%;}
+  50% {background-position:100% 50%;}
+  100% {background-position:0% 50%;}
+}
+
+/* PAGE STYLING */
+.page { display:none; padding:40px; animation: fadeIn 1s ease-in-out; }
+.active { display:block; }
+
+/* BUTTONS */
+button {
+  padding:12px 25px;
+  margin-top:20px;
+  border:none;
+  background:#ff4d6d;
+  color:white;
+  border-radius:25px;
+  cursor:pointer;
+  font-size:16px;
+  transition:0.3s;
+}
+button:hover { transform:scale(1.1); background:#ff1e4d; }
+
+/* HEADINGS & ANIMATIONS */
+h2 { font-family:'Pacifico', cursive; color:#ff4d6d; animation: bounce 1s infinite; }
+@keyframes bounce {
+  0%,100% {transform:translateY(0);}
+  50% {transform:translateY(-10px);}
+}
+@keyframes fadeIn { from {opacity:0;} to {opacity:1;} }
+
+/* IMAGES */
+img { max-width:320px; border-radius:20px; margin-top:20px; box-shadow:0 10px 20px rgba(0,0,0,0.2); transition: opacity 0.5s ease-in-out; }
+
+/* HEART MINI GAME */
+.heart { font-size:40px; cursor:pointer; transition:0.2s; }
+.heart:active { transform:scale(1.3); }
+#count { font-size:24px; color:#ff4d6d; margin-top:10px; }
+
+/* CONFETTI */
+.confetti {
+  position: fixed;
+  width: 10px;
+  height: 10px;
+  pointer-events:none;
+  z-index: 9999;
+  animation: confettiFall 3s linear forwards;
+}
+@keyframes confettiFall {
+  0% { transform: translateY(0) rotate(0deg); }
+  100% { transform: translateY(100vh) rotate(360deg); }
+}
+
+/* FLOATING HEARTS & BALLOONS ON PAGE 1 */
+.floating-heart, .balloon {
+  position: absolute;
+  pointer-events: none;
+  animation: floatUp linear infinite;
+}
+@keyframes floatUp {
+  0% { transform: translateY(0) rotate(0deg); opacity:1; }
+  100% { transform: translateY(-120vh) rotate(360deg); opacity:0; }
+}
+</style>
+</head>
+<body>
+
+<!-- BACKGROUND MUSIC -->
+<audio id="bgMusic" autoplay loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<!-- PAGE 1: Birthday Party Vibe -->
+<div id="page1" class="page active">
+  <h2>🎉 Happy Birthday, Bro! 🎉</h2>
+  <p style="font-size:18px; color:#ff1e4d; margin-bottom:30px;">
+    Wishing you a day full of laughter, fun, and love ❤️🎈
+  </p>
+  <div id="hearts-container"></div>
+  <div id="balloons-container"></div>
+  
+  <p style="margin-top:40px; font-size:16px; color:#333;">
+    Small puzzle for you 😏<br>
+    What is my favorite nickname for you?
+  </p>
+  <input type="text" id="answer1" placeholder="Type here...">
+  <br>
+  <button onclick="checkAnswer()">Unlock</button>
+</div>
+
+<!-- PAGE 2: Slideshow -->
+<div id="page2" class="page">
+  <h2>Our Memories 📸</h2>
+  <img id="slideshow" src="img1.jpg">
+  <p id="caption">Memory 1</p>
+  <button onclick="nextImage()">Next ➡️</button>
+</div>
+
+<!-- PAGE 3: Mini Game -->
+<div id="page3" class="page">
+  <h2>Mini Game 🎮</h2>
+  <p>Tap the heart 7 times to unlock ❤️</p>
+  <div class="heart" onclick="clickGame()">❤️</div>
+  <p id="count">0</p>
+</div>
+
+<!-- PAGE 4: Final Message -->
+<div id="page4" class="page">
+  <h2>For You 💌</h2>
+  <p style="max-width:500px;margin:auto;line-height:1.8;">
+    Dear Brother,<br><br>
+    From fighting like WWE to taking care of each other, every moment with you is special. You are not just my brother, you are my best friend.
+    <br><br>
+    No matter how much we fight, I will always be there for you ❤️
+    <br><br>
+    Happy Birthday 🎉
+  </p>
+</div>
+
+<script>
+// PAGE 1: Puzzle
+function checkAnswer(){
+  let ans = document.getElementById("answer1").value.toLowerCase();
+  if(ans === "chiku"){ // <-- Replace with your nickname
+    document.getElementById("page1").classList.remove("active");
+    document.getElementById("page2").classList.add("active");
+  } else {
+    alert("Wrong answer 😜 Try again");
+  }
+}
+
+// PAGE 2: Slideshow
+let images = ["img1.jpg","img2.jpg","img3.jpg"];
+let captions = ["Our childhood ❤️","Crazy fights 😂","Best memories 💫"];
+let index = 0;
+
+function nextImage(){
+  index++;
+  if(index < images.length){
+    const img = document.getElementById("slideshow");
+    img.style.opacity = 0;
+    setTimeout(() => {
+      img.src = images[index];
+      document.getElementById("caption").innerText = captions[index];
+      img.style.opacity = 1;
+    }, 500);
+  } else {
+    document.getElementById("page2").classList.remove("active");
+    document.getElementById("page3").classList.add("active");
+  }
+}
+
+// PAGE 3: Mini Game
+let count = 0;
+function clickGame(){
+  count++;
+  document.getElementById("count").innerText = count;
+  spawnConfetti(); // fun confetti effect
+  if(count === 7){
+    document.getElementById("page3").classList.remove("active");
+    document.getElementById("page4").classList.add("active");
+  }
+}
+
+// CONFETTI
+function spawnConfetti(){
+  const confetti = document.createElement('div');
+  confetti.className = 'confetti';
+  confetti.style.left = Math.random()*window.innerWidth + 'px';
+  confetti.style.background = `hsl(${Math.random()*360}, 70%, 60%)`;
+  document.body.appendChild(confetti);
+  setTimeout(() => confetti.remove(), 3000);
+}
+
+// PAGE 1: Hearts & Balloons
+function spawnHeart(){
+  const heart = document.createElement('div');
+  heart.className = 'floating-heart';
+  heart.style.left = Math.random()*window.innerWidth + 'px';
+  heart.style.color = `hsl(${Math.random()*360}, 70%, 60%)`;
+  heart.innerText = '❤️';
+  heart.style.fontSize = (15 + Math.random()*20) + 'px';
+  heart.style.animationDuration = (3 + Math.random()*2) + 's';
+  document.getElementById('hearts-container').appendChild(heart);
+  setTimeout(() => heart.remove(), 5000);
+}
+
+function spawnBalloon(){
+  const balloon = document.createElement('div');
+  balloon.className = 'balloon';
+  balloon.style.left = Math.random()*window.innerWidth + 'px';
+  balloon.innerText = '🎈';
+  balloon.style.fontSize = (20 + Math.random()*30) + 'px';
+  balloon.style.animationDuration = (4 + Math.random()*3) + 's';
+  document.getElementById('balloons-container').appendChild(balloon);
+  setTimeout(() => balloon.remove(), 6000);
+}
+
+// Continuous animation
+setInterval(spawnHeart, 400);
+setInterval(spawnBalloon, 800);
+
+</script>
+</body>
+</html>
