@@ -85,8 +85,9 @@ img { max-width:320px; border-radius:20px; margin-top:20px; box-shadow:0 10px 20
 <body>
 
 <!-- BACKGROUND MUSIC -->
-<audio id="bgMusic" autoplay loop>
+<audio id="bgMusic" loop controls>
   <source src="music.mp3" type="audio/mpeg">
+  Your browser does not support the audio element.
 </audio>
 
 <!-- PAGE 1: Birthday Party Vibe -->
@@ -110,7 +111,7 @@ img { max-width:320px; border-radius:20px; margin-top:20px; box-shadow:0 10px 20
 <!-- PAGE 2: Slideshow -->
 <div id="page2" class="page">
   <h2>Our Memories 📸</h2>
-  <img id="slideshow" src="img/img1.jpg">
+  <img id="slideshow" src="img1.jpg">
   <p id="caption">Memory 1 ❤️</p>
   <button onclick="nextImage()">Next ➡️</button>
 </div>
@@ -137,23 +138,24 @@ img { max-width:320px; border-radius:20px; margin-top:20px; box-shadow:0 10px 20
 </div>
 
 <script>
-// PAGE 1: Puzzle
+// PAGE 1: Puzzle & music start
 function checkAnswer(){
   let ans = document.getElementById("answer1").value.toLowerCase();
-  if(ans === "chombu"){ // <-- Replace with your nickname
+  if(ans === "chombu"){ // your nickname
     document.getElementById("page1").classList.remove("active");
     document.getElementById("page2").classList.add("active");
+
+    // Play background music
+    const music = document.getElementById("bgMusic");
+    music.play().catch(()=>console.log("Autoplay blocked. Click to play music."));
+    
   } else {
     alert("Wrong answer 😜 Try again");
   }
 }
 
 // PAGE 2: Slideshow
-let images = [
-  "img/img1.jpg","img/img2.jpg","img/img3.jpg","img/img4.jpg","img/img5.jpg",
-  "img/img6.jpg","img/img7.jpg","img/img8.jpg","img/img9.jpg","img/img10.jpg"
-];
-
+let images = ["img1.jpg","img2.jpg","img3.jpg","img4.jpg","img5.jpg","img6.jpg","img7.jpg","img8.jpg","img9.jpg","img10.jpg"];
 let captions = [
   "Remember when we were alone at home ❤️",
   "That risk we took just to eat ice and we ended up breaking it 😂",
@@ -166,8 +168,8 @@ let captions = [
   "Your sickness, even for a day, would make me feel bad, but taking care of you was the best part ❤️",
   "We grew up as adults now, but I still miss those fights from back then 💖"
 ];
-
 let index = 0;
+
 function nextImage(){
   index++;
   if(index < images.length){
@@ -189,7 +191,7 @@ let count = 0;
 function clickGame(){
   count++;
   document.getElementById("count").innerText = count;
-  spawnConfetti(); // fun confetti effect
+  spawnConfetti();
   if(count === 7){
     document.getElementById("page3").classList.remove("active");
     document.getElementById("page4").classList.add("active");
@@ -233,7 +235,6 @@ function spawnBalloon(){
 // Continuous animation
 setInterval(spawnHeart, 400);
 setInterval(spawnBalloon, 800);
-
 </script>
 </body>
 </html>
