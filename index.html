@@ -100,7 +100,7 @@ img { max-width:320px; border-radius:20px; margin-top:20px; box-shadow:0 10px 20
   
   <p style="margin-top:40px; font-size:16px; color:#333;">
     Small puzzle for you 😏<br>
-    What is my favorite nickname for you?
+    What is your favorite nickname for me?
   </p>
   <input type="text" id="answer1" placeholder="Type here...">
   <br>
@@ -140,7 +140,7 @@ img { max-width:320px; border-radius:20px; margin-top:20px; box-shadow:0 10px 20
 // PAGE 1: Puzzle
 function checkAnswer(){
   let ans = document.getElementById("answer1").value.toLowerCase();
-  if(ans === "chiku"){ // <-- Replace with your nickname
+  if(ans === "chombu"){ // <-- Replace with your nickname
     document.getElementById("page1").classList.remove("active");
     document.getElementById("page2").classList.add("active");
   } else {
@@ -155,8 +155,17 @@ let images = [
 ];
 
 let captions = [
-  "Memory 1 ❤️","Memory 2 😂","Memory 3 💫","Memory 4 🎉","Memory 5 😎",
-  "Memory 6 🏆","Memory 7 🎈","Memory 8 😁","Memory 9 ❤️","Memory 10 💖"
+  let captions = [
+  "Remember when we were alone at home ❤️",
+  "That risk we took just to eat ice and we ended up breaking it 😂",
+  "The moment when you secretly started burning paper near the gas stove 💫",
+  "Me, who grew up watching you play all the time as if you were my personal streamer 🎉",
+  "And also me crying all the time for the toys you had was insane 😎",
+  "WWE show which was directed by you and also won by you 🏆",
+  "How can we forget playing with WWE cards? Having a gold card back then was our biggest achievement 🎈",
+  "A small fight is compulsory every day 😁",
+  "Your sickness, even for a day, would make me feel bad, but taking care of you was the best part ❤️",
+  "We grew up as adults now, but I still miss those fights from back then 💖"
 ];
 
 let index = 0;
