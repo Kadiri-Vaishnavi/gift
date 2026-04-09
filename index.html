@@ -49,7 +49,7 @@ h2 { font-family:'Pacifico', cursive; color:#ff4d6d; animation: bounce 1s infini
 @keyframes fadeIn { from {opacity:0;} to {opacity:1;} }
 
 /* IMAGES */
-img { max-width:320px; border-radius:20px; margin-top:20px; box-shadow:0 10px 20px rgba(0,0,0,0.2); transition: opacity 0.5s ease-in-out; }
+img { max-width:500px; border-radius:20px; margin-top:20px; box-shadow:0 10px 20px rgba(0,0,0,0.2); transition: opacity 0.5s ease-in-out; }
 
 /* HEART MINI GAME */
 .heart { font-size:40px; cursor:pointer; transition:0.2s; }
@@ -85,7 +85,7 @@ img { max-width:320px; border-radius:20px; margin-top:20px; box-shadow:0 10px 20
 <body>
 
 <!-- BACKGROUND MUSIC -->
-<audio id="bgMusic" loop controls>
+<audio id="bgMusic" loop>
   <source src="music.mp3" type="audio/mpeg">
   Your browser does not support the audio element.
 </audio>
@@ -138,25 +138,24 @@ img { max-width:320px; border-radius:20px; margin-top:20px; box-shadow:0 10px 20
 </div>
 
 <script>
-// PAGE 1: Puzzle & music start
+// ================== PAGE 1: Puzzle & Music ==================
 function checkAnswer(){
-  let ans = document.getElementById("answer1").value.toLowerCase();
-  if(ans === "chombu"){ // your nickname
+  const ans = document.getElementById("answer1").value.toLowerCase();
+  if(ans === "chombu"){ // replace with your nickname
     document.getElementById("page1").classList.remove("active");
     document.getElementById("page2").classList.add("active");
 
-    // Play background music
+    // play music after user interaction
     const music = document.getElementById("bgMusic");
-    music.play().catch(()=>console.log("Autoplay blocked. Click to play music."));
-    
+    music.play().catch(() => alert("Click anywhere to start music 🎵"));
   } else {
     alert("Wrong answer 😜 Try again");
   }
 }
 
-// PAGE 2: Slideshow
-let images = ["img1.jpg","img2.jpg","img3.jpg","img4.jpg","img5.jpg","img6.jpg","img7.jpg","img8.jpg","img9.jpg","img10.jpg"];
-let captions = [
+// ================== PAGE 2: Slideshow ==================
+const images = ["img1.jpg","img2.jpg","img3.jpg","img4.jpg","img5.jpg","img6.jpg","img7.jpg","img8.jpg","img9.jpg","img10.jpg"];
+const captions = [
   "Remember when we were alone at home ❤️",
   "That risk we took just to eat ice and we ended up breaking it 😂",
   "The moment when you secretly started burning paper near the gas stove 💫",
@@ -186,7 +185,7 @@ function nextImage(){
   }
 }
 
-// PAGE 3: Mini Game
+// ================== PAGE 3: Mini Game ==================
 let count = 0;
 function clickGame(){
   count++;
@@ -198,7 +197,7 @@ function clickGame(){
   }
 }
 
-// CONFETTI
+// ================== CONFETTI ==================
 function spawnConfetti(){
   const confetti = document.createElement('div');
   confetti.className = 'confetti';
@@ -208,7 +207,7 @@ function spawnConfetti(){
   setTimeout(() => confetti.remove(), 3000);
 }
 
-// PAGE 1: Hearts & Balloons
+// ================== PAGE 1: Floating Hearts & Balloons ==================
 function spawnHeart(){
   const heart = document.createElement('div');
   heart.className = 'floating-heart';
@@ -232,7 +231,7 @@ function spawnBalloon(){
   setTimeout(() => balloon.remove(), 6000);
 }
 
-// Continuous animation
+// continuous floating
 setInterval(spawnHeart, 400);
 setInterval(spawnBalloon, 800);
 </script>
