@@ -110,8 +110,8 @@ img { max-width:320px; border-radius:20px; margin-top:20px; box-shadow:0 10px 20
 <!-- PAGE 2: Slideshow -->
 <div id="page2" class="page">
   <h2>Our Memories 📸</h2>
-  <img id="slideshow" src="img1.jpg">
-  <p id="caption">Memory 1</p>
+  <img id="slideshow" src="img/img1.jpg">
+  <p id="caption">Memory 1 ❤️</p>
   <button onclick="nextImage()">Next ➡️</button>
 </div>
 
@@ -149,10 +149,17 @@ function checkAnswer(){
 }
 
 // PAGE 2: Slideshow
-let images = ["img1.jpg","img2.jpg","img3.jpg"];
-let captions = ["Our childhood ❤️","Crazy fights 😂","Best memories 💫"];
-let index = 0;
+let images = [
+  "img/img1.jpg","img/img2.jpg","img/img3.jpg","img/img4.jpg","img/img5.jpg",
+  "img/img6.jpg","img/img7.jpg","img/img8.jpg","img/img9.jpg","img/img10.jpg"
+];
 
+let captions = [
+  "Memory 1 ❤️","Memory 2 😂","Memory 3 💫","Memory 4 🎉","Memory 5 😎",
+  "Memory 6 🏆","Memory 7 🎈","Memory 8 😁","Memory 9 ❤️","Memory 10 💖"
+];
+
+let index = 0;
 function nextImage(){
   index++;
   if(index < images.length){
