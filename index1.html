@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday 🎉</title>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+<style>
+/* BODY & BACKGROUND */
+body {
+  font-family: 'Poppins', sans-serif;
+  margin:0;
+  text-align:center;
+  overflow-x: hidden; /* allow vertical scrolling */
+  background: linear-gradient(135deg,#ffe0e9,#fff5f5);
+  background-size: 200% 200%;
+  animation: gradientBG 10s ease infinite;
+}
+html {
+  scroll-behavior: smooth; /* smooth scrolling */
+}
+@keyframes gradientBG {
+  0% {background-position:0% 50%;}
+  50% {background-position:100% 50%;}
+  100% {background-position:0% 50%;}
+}
+
+/* PAGE STYLING */
+.page { display:none; padding:40px; animation: fadeIn 1s ease-in-out; }
+.active { display:block; }
+
+/* BUTTONS */
+button {
+  padding:12px 25px;
+  margin-top:20px;
+  border:none;
+  background:#ff4d6d;
+  color:white;
+  border-radius:25px;
+  cursor:pointer;
+  font-size:16px;
+  transition:0.3s;
+}
+button:hover { transform:scale(1.1); background:#ff1e4d; }
+
+/* HEADINGS & ANIMATIONS */
+h2 { font-family:'Pacifico', cursive; color:#ff4d6d; animation: bounce 1s infinite; }
+@keyframes bounce {
+  0%,100% {transform:translateY(0);}
+  50% {transform:translateY(-10px);}
+}
+@keyframes fadeIn { from {opacity:0;} to {opacity:1;} }
+
+/* IMAGES */
+img { max-width:500px; border-radius:20px; margin-top:20px; box-shadow:0 10px 20px rgba(0,0,0,0.2); transition: opacity 0.5s ease-in-out; }
+
+/* HEART MINI GAME */
+.heart { font-size:40px; cursor:pointer; transition:0.2s; }
+.heart:active { transform:scale(1.3); }
+#count { font-size:24px; color:#ff4d6d; margin-top:10px; }
+
+/* CONFETTI */
+.confetti {
+  position: fixed;
+  width: 10px;
+  height: 10px;
+  pointer-events:none;
+  z-index: 9999;
+  animation: confettiFall 3s linear forwards;
+}
+@keyframes confettiFall {
+  0% { transform: translateY(0) rotate(0deg); }
+  100% { transform: translateY(100vh) rotate(360deg); }
+}
+
+/* FLOATING HEARTS & BALLOONS ON PAGE 1 */
+.floating-heart, .balloon {
+  position: absolute;
+  pointer-events: none;
+  animation: floatUp linear infinite;
+}
+@keyframes floatUp {
+  0% { transform: translateY(0) rotate(0deg); opacity:1; }
+  100% { transform: translateY(-120vh) rotate(360deg); opacity:0; }
+}
+</style>
+</head>
+<body>
+
+<!-- BACKGROUND MUSIC -->
+<audio id="bgMusic" loop>
+  <source src="music.mpeg" type="audio/mpeg">
+  Your browser does not support the audio element.
+</audio>
+
+<!-- PAGE 1: Birthday Party Vibe -->
+<div id="page1" class="page active">
+  <h2>🎉 Happy Birthday, Bro! 🎉</h2>
+  <p style="font-size:18px; color:#ff1e4d; margin-bottom:30px;">
+    Wishing you a day full of laughter, fun, and love ❤️🎈
+  </p>
+  <div id="hearts-container"></div>
+  <div id="balloons-container"></div>
+  
+  <p style="margin-top:40px; font-size:16px; color:#333;">
+    Small puzzle for you 😏<br>
+    What is your favorite nickname for me?
+  </p>
+  <input type="text" id="answer1" placeholder="Type here...">
+  <br>
+  <button onclick="checkAnswer()">Unlock</button>
+</div>
+
+<!-- PAGE 2: Slideshow -->
+<div id="page2" class="page">
+  <h2>Our Memories 📸</h2>
+  <img id="slideshow" src="img1.png">
+  <p id="caption">Remember when we were alone at home ❤️</p>
+  <button onclick="nextImage()">Next ➡️</button>
+</div>
+
+<!-- PAGE 3: Mini Game -->
+<div id="page3" class="page">
+  <h2>Mini Game 🎮</h2>
+  <p>To unlock use my bdy date ❤️</p>
+  <div class="heart" onclick="clickGame()">❤️</div>
+  <p id="count">0</p>
+</div>
+
+<!-- PAGE 4: Final Message -->
+<div id="page4" class="page">
+  <h2>For You 💌</h2>
+  <p style="max-width:500px;margin:auto;line-height:1.8;">
+    Dear Brother(dear lantivi manaki suit avvavu le ra pandi),<br><br>
+    First of all Happy Birthday ra..<3 From past 21 yrs you were part of everything that happened in my life and na rest of the life
+    lo kuda ela kottukuntu ,navvuthu ,navvisthu untav ani anukuntunna:) Parledu roju antha alochinchaku we will sort out everything
+    together loan clear chedham ,illu kadadam but it takes time so antha alochinachu - You are not alone I will always be there for
+    you.. Naku telusu neku elantivi ani nacchavu ani but I planned somthing else and it do not reach you by time.So for now the best 
+    way possible for me is this.. I miss the way we used to be before ante kottukovadam ,adadam , bike rides what not anni... I miss 
+    celebrating your bithday with a usual cake and lots of handmade gifts;) Naku nv ante chala estam I express but You do not I know
+    but I am waiting for that day when you express.. chala cheppali ani undi neku but I want you in-person to tell.. fast ga vacchai
+    nenu join aiyya lopu thirugudam...next year ne bdy ki India lo unda la plan chai.. naku inthaku minchi em cheppali oo ardham 
+    kavadam ledu... I guess I covered everything nenu unna neku do not worry :)
+    <br><br>
+    LOVE YOU MY MAN...❤️
+    <br><br>
+    Happiest birthday MAN🎉
+  </p>
+</div>
+
+<script>
+// ================== PAGE 1: Puzzle & Music ==================
+function checkAnswer(){
+  const ans = document.getElementById("answer1").value.toLowerCase();
+  if(ans === "chombu"){ 
+    document.getElementById("page1").classList.remove("active");
+    document.getElementById("page2").classList.add("active");
+
+    const music = document.getElementById("bgMusic");
+    music.play().catch(()=>alert("Click anywhere to start music 🎵"));
+  } else {
+    alert("Wrong answer 😜 Try again");
+  }
+}
+
+// ================== PAGE 2: Slideshow ==================
+const images = ["img1.png","img2.png","img3.jpg","img4.png","img5.png","img6.png","img7.png","img8.png","img9.png","img10.png"];
+const captions = [
+  "Remember when we were alone at home ❤️",
+  "That risk we took just to eat ice and we ended up breaking it 😂",
+  "The moment when you secretly started burning paper near the gas stove 💫",
+  "Me, who grew up watching you play all the time as if you were my personal streamer 🎉",
+  "And also me crying all the time for the toys you had was insane 😎",
+  "WWE show which was directed by you and also won by you 🏆",
+  "How can we forget playing with WWE cards? Having a gold card back then was our biggest achievement 🎈",
+  "A small fight is compulsory every day 😁",
+  "Your sickness, even for a day, would make me feel bad, but taking care of you was the best part ❤️",
+  "We grew up as adults now, but I still miss those fights from back then 💖"
+];
+let index = 0;
+
+function nextImage(){
+  index++;
+  if(index < images.length){
+    const img = document.getElementById("slideshow");
+    img.style.opacity = 0;
+    setTimeout(() => {
+      img.src = images[index];
+      document.getElementById("caption").innerText = captions[index];
+      img.style.opacity = 1;
+    }, 500);
+  } else {
+    document.getElementById("page2").classList.remove("active");
+    document.getElementById("page3").classList.add("active");
+  }
+}
+
+// ================== PAGE 3: Mini Game ==================
+let count = 0;
+function clickGame(){
+  count++;
+  document.getElementById("count").innerText = count;
+  spawnConfetti();
+  if(count === 2){
+    document.getElementById("page3").classList.remove("active");
+    document.getElementById("page4").classList.add("active");
+  }
+}
+
+// ================== CONFETTI ==================
+function spawnConfetti(){
+  const confetti = document.createElement('div');
+  confetti.className = 'confetti';
+  confetti.style.left = Math.random()*window.innerWidth + 'px';
+  confetti.style.background = `hsl(${Math.random()*360}, 70%, 60%)`;
+  document.body.appendChild(confetti);
+  setTimeout(() => confetti.remove(), 3000);
+}
+
+// ================== PAGE 1: Floating Hearts & Balloons ==================
+function spawnHeart(){
+  const heart = document.createElement('div');
+  heart.className = 'floating-heart';
+  heart.style.left = Math.random()*window.innerWidth + 'px';
+  heart.style.color = `hsl(${Math.random()*360}, 70%, 60%)`;
+  heart.innerText = '❤️';
+  heart.style.fontSize = (15 + Math.random()*20) + 'px';
+  heart.style.animationDuration = (3 + Math.random()*2) + 's';
+  document.getElementById('hearts-container').appendChild(heart);
+  setTimeout(() => heart.remove(), 5000);
+}
+
+function spawnBalloon(){
+  const balloon = document.createElement('div');
+  balloon.className = 'balloon';
+  balloon.style.left = Math.random()*window.innerWidth + 'px';
+  balloon.innerText = '🎈';
+  balloon.style.fontSize = (20 + Math.random()*30) + 'px';
+  balloon.style.animationDuration = (4 + Math.random()*3) + 's';
+  document.getElementById('balloons-container').appendChild(balloon);
+  setTimeout(() => balloon.remove(), 6000);
+}
+
+// continuous floating
+setInterval(spawnHeart, 400);
+setInterval(spawnBalloon, 800);
+</script>
+</body>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday 🎉</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+
+<style>
+body {
+  font-family: 'Poppins', sans-serif;
+  margin:0;
+  text-align:center;
+  overflow-x:hidden;
+  background: linear-gradient(135deg,#ffe0e9,#fff5f5);
+  background-size: 200% 200%;
+  animation: gradientBG 10s ease infinite;
+}
+
+.page { display:none; padding:40px; animation: fadeIn 1s ease-in-out; }
+.page.active { display:block; }
+
+button {
+  padding:12px 25px;
+  border:none;
+  background:#ff4d6d;
+  color:white;
+  border-radius:25px;
+  cursor:pointer;
+}
+
+img { max-width:500px; border-radius:20px; margin-top:20px; }
+
+.heart { font-size:40px; cursor:pointer; }
+#count { font-size:24px; color:#ff4d6d; }
+
+@keyframes gradientBG {
+  0% {background-position:0% 50%;}
+  50% {background-position:100% 50%;}
+  100% {background-position:0% 50%;}
+}
+@keyframes fadeIn { from {opacity:0;} to {opacity:1;} }
+</style>
+</head>
+
+<body>
+
+<!-- PAGE 1 -->
+<div id="page1" class="page active">
+  <h2>🎉 Happy Birthday, Bro! 🎉</h2>
+  <p>Wishing you a day full of love ❤️</p>
+
+  <p>What is your favorite nickname for me?</p>
+  <input type="text" id="answer1">
+  <br>
+  <button onclick="checkAnswer()">Unlock</button>
+</div>
+
+<!-- PAGE 2 -->
+<div id="page2" class="page">
+  <h2>Our Memories 📸</h2>
+  <img id="slideshow" src="img1.png">
+  <p id="caption">Memory ❤️</p>
+  <button onclick="nextImage()">Next</button>
+</div>
+
+<!-- PAGE 3 -->
+<div id="page3" class="page">
+  <h2>Mini Game 🎮</h2>
+  <p>Click heart to unlock ❤️</p>
+  <div class="heart" onclick="clickGame()">❤️</div>
+  <p id="count">0</p>
+</div>
+
+<!-- ✅ PAGE 4 (FIXED PROPERLY) -->
+<div id="page4" class="page">
+  <h2>For You 💌</h2>
+
+  <p style="max-width:500px;margin:auto;line-height:1.8; white-space: pre-line;">
+Dear Brother  
+(dear lantivi manaki suit avvavu le ra pandi 😜),
+
+First of all… Happy Birthday ra ❤️
+
+From the past 21 years, you’ve been part of everything in my life.  
+And for the rest of my life too, we’ll keep fighting, laughing, and making fun of each other like always :)
+
+Parledu… roju antha alochinchaku.  
+We will sort out everything together — loan clear chedham, illu kadadam… everything.  
+It will take time, but we’ll do it.
+
+You are not alone. I will always be there for you.
+
+Naku telusu neku ilantivi nachavu…  
+But I planned something else and it didn’t reach you on time.  
+So for now, this is the best way I could do.
+
+I really miss the way we used to be…  
+kottukovadam, adadam, bike rides… everything.  
+I miss celebrating your birthday with a cake and lots of handmade gifts 🥹
+
+Naku nv ante chala estam.  
+I express… but you don’t 😏  
+Still, I’m waiting for that day when you do.
+
+Chala cheppali ani undi…  
+but I want to tell you all that in person.
+
+Fast ga vacchai… nenu join ayya lopu thirugudam.  
+Next year nee birthday ki India lo unda la plan chey 😤
+
+Nenu unna neku. Do not worry 🙂
+
+LOVE YOU MY MAN ❤️🔥  
+Happiest Birthday 🎉
+  </p>
+</div>
+  
+<script>
+function checkAnswer(){
+  const ans = document.getElementById("answer1").value.toLowerCase();
+  if(ans === "chombu"){
+    page1.classList.remove("active");
+    page2.classList.add("active");
+  } else {
+    alert("Wrong answer");
+  }
+}
+
+const images = ["img1.png","img2.png","img3.jpg"];
+let index = 0;
+
+function nextImage(){
+  index++;
+  if(index < images.length){
+    document.getElementById("slideshow").src = images[index];
+  } else {
+    page2.classList.remove("active");
+    page3.classList.add("active");
+  }
+}
+
+let count = 0;
+function clickGame(){
+  count++;
+  document.getElementById("count").innerText = count;
+
+  if(count == 2){
+    page3.classList.remove("active");
+    page4.classList.add("active");
+  }
+}
+</script>
+
+</body>
+</html>
